@@ -45,12 +45,12 @@ const Card = ({
   // Adicionamos a tipagem explicita 'Variants' e usamos 'as const' no ease
   const textVariant: Variants = {
     hidden: { y: "100%" },
-    visible: { 
-      y: "0%", 
-      transition: { 
-        duration: 0.8, 
+    visible: {
+      y: "0%",
+      transition: {
+        duration: 0.8,
         // 'as const' diz ao TS que isso é uma tupla imutável de 4 números, não um array genérico
-        ease: [0.76, 0, 0.24, 1] as const 
+        ease: [0.76, 0, 0.24, 1] as const
       }
     },
   }
@@ -68,12 +68,12 @@ const Card = ({
     >
       {/* --- COLUNA DE TEXTO --- */}
       <div className="flex-1 flex flex-col justify-center z-10 w-full">
-        
+
         {/* Categoria */}
         <div className="overflow-hidden mb-2">
-          <motion.span 
+          <motion.span
             variants={textVariant}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }} 
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.76, 0, 0.24, 1] as const }}
             className="block text-xs font-medium uppercase tracking-widest text-neutral-500"
           >
             {category}
@@ -82,12 +82,12 @@ const Card = ({
 
         {/* Título */}
         <div className="overflow-hidden mb-6">
-          <motion.h3 
+          <motion.h3
             variants={textVariant}
-            transition={{ 
-              delay: 0.4, 
+            transition={{
+              delay: 0.4,
               duration: 0.8,
-              ease: [0.76, 0, 0.24, 1] as const 
+              ease: [0.76, 0, 0.24, 1] as const
             }}
             className="text-4xl md:text-6xl font-bold text-primary leading-[1.1]"
           >
@@ -97,12 +97,12 @@ const Card = ({
 
         {/* Descrição */}
         <div className="overflow-hidden mb-8">
-          <motion.p 
+          <motion.p
             variants={textVariant}
-            transition={{ 
-              delay: 0.6, 
+            transition={{
+              delay: 0.6,
               duration: 0.8,
-              ease: [0.76, 0, 0.24, 1] as const 
+              ease: [0.76, 0, 0.24, 1] as const
             }}
             className="text-black text-lg leading-relaxed max-w-md"
           >
@@ -111,13 +111,13 @@ const Card = ({
         </div>
 
         {/* Linha Decorativa */}
-        <motion.div 
+        <motion.div
           initial={{ scaleX: 0, originX: 0 }}
           whileInView={{ scaleX: 1 }}
-          transition={{ 
-            duration: 1.2, 
-            delay: 0.8, 
-            ease: "circOut" 
+          transition={{
+            duration: 1.2,
+            delay: 0.8,
+            ease: "circOut"
           }}
           className="h-px w-full bg-secondary mb-6"
         />
@@ -141,10 +141,10 @@ const Card = ({
           onMouseLeave={handleMouseLeave}
           initial={{ clipPath: "inset(10% 10% 10% 10%)", scale: 0.9 }}
           whileInView={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
-          transition={{ 
+          transition={{
             duration: 1.5,
-            delay: 0.2, 
-            ease: [0.25, 1, 0.5, 1] as const 
+            delay: 0.2,
+            ease: [0.25, 1, 0.5, 1] as const
           }}
           // MOBILE FIX: 
           // 'cursor-none' apenas em telas médias (md) para cima.
@@ -156,9 +156,7 @@ const Card = ({
             // O efeito de escala no hover continua, mas no mobile será ignorado naturalmente sem mouse
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full h-full relative"
-          >
-            <Image
+            className="w-full h-full relative" > <Image
               src={path}
               alt={title || "Project Image"}
               fill

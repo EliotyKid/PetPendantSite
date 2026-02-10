@@ -5,6 +5,7 @@ import CartDrawer from "@/components/CartDrawer";
 import Header from "@/components/Header";
 import { getAuth } from "@/lib/auth/get-auth";
 import { AuthProvider } from "@/context/AuthContext";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,10 +23,11 @@ export default async function RootLayout({
     <html lang="en">
       <AuthProvider value={auth}>
         <CartProvider>
-          <body className="bg-base overflow-x-hidden">
+          <body className="bg-base overflow-x-hidden w-svh">
             <Header />
             <CartDrawer />
             {children}
+            <Footer />
           </body>
         </CartProvider>
       </AuthProvider>
