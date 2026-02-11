@@ -62,16 +62,16 @@ const Tag = forwardRef<Group, CustomModelProps>(
             geometry={nodes.Circle.geometry} // Confirmei no seu arquivo, é "Circle"
             material={customMaterial || baseMaterial}
             position={[0, 0, 0]}
-            rotation={[Math.PI - 0.1, Math.PI / 2, 0]} // A mesh já está girada!
-            scale={[6.5, 6.5, 6.5]}
+            rotation={[Math.PI / 2, Math.PI / 2, 0]} // A mesh já está girada!
+            scale={[12, 12, 12]}
           >
             {textureUrl && (
               <ImageDecal
                 url={textureUrl}
                 debug={true} // <--- LIGADO
-                rotation={[0, Math.PI / 2, 0]} // Girado para alinhar com a face
-                scale={[3.5, 3.5, 0.15]} // Retangular e profundo
-                position={[0.2, 0, 0]}
+                rotation={[Math.PI / 2, 0, Math.PI / 2]} // Girado para alinhar com a face
+                scale={[2, 2, 0.05]} // Retangular e profundo
+                position={[0, 0.1, 0]}
               />
             )}
             {/* ... */}
@@ -94,4 +94,3 @@ Tag.displayName = "Tag";
 export default Tag;
 
 useGLTF.preload("/models/Tag.glb");
-

@@ -10,6 +10,7 @@ import { useGLTF } from "@react-three/drei";
 import { Group, MeshStandardMaterial } from "three";
 import { ImageDecal } from "../ImageDecal"; // Verifique se o caminho do import está correto
 import TextDecal from "../TextDecal"; // Verifique se o caminho do import está correto
+import { mx_bilerp_0 } from "three/src/nodes/materialx/lib/mx_noise.js";
 
 interface CustomModelProps extends ComponentPropsWithoutRef<"group"> {
   materialType?: string;
@@ -63,16 +64,16 @@ const Hearth = forwardRef<Group, CustomModelProps>(
             material={customMaterial || baseMaterial}
             position={[0, 0, 0]}
             rotation={[Math.PI / 2 - 0.1, 0, 0]}
-            scale={[8, 8, 8]}
+            scale={[7, 7, 7]}
           >
             {/* FRENTE (DECAL) */}
             {/* Nota: Talvez precise ajustar o scale do Decal dentro do componente ImageDecal para o formato Coração */}
             {textureUrl && (
               <ImageDecal
                 url={textureUrl}
-                scale={[3, 3, 0.15]}
+                scale={[3.2, 3.2, 0.05]}
                 rotation={[Math.PI / 2, 0, 0]}
-                position={[0, 0.1, 0]}
+                position={[0, 0.15, -0.1]}
                 debug={true}
               />
             )}
@@ -91,4 +92,3 @@ Hearth.displayName = "Hearth";
 export default Hearth;
 
 useGLTF.preload("/models/Heart.glb");
-
