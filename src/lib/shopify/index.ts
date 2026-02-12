@@ -65,7 +65,7 @@ export async function addToCart(cartId: string, variantId: string) {
 export async function getCustomer(accessToken: string) {
   try {
     const res = await fetch(
-      `https://shopify.com/${env.NEXT_PUBLIC_STORE_ID}/account/customer/api/unstable/graphql`,
+      `https://shopify.com/${env.NEXT_PUBLIC_STORE_ID!}/account/customer/api/unstable/graphql`,
       {
         method: "POST",
         headers: {

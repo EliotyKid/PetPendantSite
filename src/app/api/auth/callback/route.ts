@@ -10,16 +10,21 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    const clientId = env.NEXT_PUBLIC_STOREFRONT_CLIENT_ID;
+
+    if (!clientId) {
+      return new Response("Missing client ID", { status: 500 });
+    }
     const tokenRes = await fetch(
-      `https://shopify.com/${env.NEXT_PUBLIC_STORE_ID}/auth/oauth/token`,
+      `https://shopify.com/${env.NEXT_PUBLIC_STORE_ID!}/auth/oauth/token`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
           grant_type: 'authorization_code',
-          client_id: env.NEXT_PUBLIC_STOREFRONT_CLIENT_ID,
+          client_id: clientId,
           code: code,
-          redirect_uri: env.NEXT_PUBLIC_SHOPIFY_REDIRECT_URL,
+          redirect_uri: env.NEXT_PUBLIC_SHOPIFY_REDIRECT_URL!,
         }).toString(),
       }
     );
