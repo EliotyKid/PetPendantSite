@@ -90,7 +90,7 @@ const Customize = () => {
       <section className="w-full md:w-1/2 min-h-screen py-20 px-6 md:px-20 bg-base">
         <div className="max-w-md mx-auto flex flex-col gap-12">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 font-montserrat">
+            <h1 className="text-black text-4xl md:text-5xl font-bold mb-4 font-montserrat">
               Design your piece.
             </h1>
             <p className="text-neutral-400">
@@ -100,7 +100,7 @@ const Customize = () => {
 
           {/* 1 SHAPE */}
           <div className="flex flex-col gap-4">
-            <label className="text-sm font-bold uppercase tracking-widest text-neutral-500">
+            <label className="text-sm font-bold uppercase tracking-widest text-neutral">
               1. Pendant Shape
             </label>
             <div className="grid grid-cols-3 gap-4">
@@ -109,25 +109,31 @@ const Customize = () => {
                   key={key}
                   onClick={() => setShape(key)}
                   className={`
-                    p-4 rounded-xl border flex flex-col items-center gap-3 transition-all duration-300
-                    ${shape === key ? "border-white bg-secondary" : "border-neutral-800 hover:border-neutral-700"}
+                    p-4 rounded-xl border-2 flex flex-col items-center gap-3 transition-all duration-300 hover:scale-105
+                    ${shape === key ? "border-transparent bg-secondary text-white" : "border-neutral hover:border-dark-grey bg-light-cream"}
                   `}
                 >
                   <div
-                    className={`w-8 h-8 border-2 border-neutral-400 flex items-center justify-center ${key === "coin" ? "rounded-full" : key === "rectangle" ? "rounded-sm aspect-3/4" : ""}`}
+                    className={`w-8 h-8 ${key !== "heart" && "border-2"} border-neutral flex items-center justify-center
+                    ${shape === key ? "border-white" : ""}
+                    ${key === "coin" ? "rounded-full" : ""}
+                    ${key === "rectangle" ? "rounded-sm aspect-3/4" : ""}`}
                   >
-                    {key == "heart" && (
+                    {key === "heart" && (
                       <svg
                         viewBox="0 0 24 24"
-                        fill="none"
+                        fill={shape === key ? "currentColor" : "none"}
                         stroke="currentColor"
                         strokeWidth="2"
-                        className="w-5 h-5 text-neutral-400"
+                        className={`
+                          w-10 h-10
+                          ${shape === key ? "text-white" : "text-neutral"}
+                        `}
                       >
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                       </svg>
                     )}
-                  </div>
+                  </div>{" "}
                   <span className="text-xs font-medium font-montserrat">
                     {SHAPES[key].name}
                   </span>
