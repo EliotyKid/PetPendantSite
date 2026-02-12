@@ -11,16 +11,22 @@ export default async function LoginLogout() {
     customer = await getCustomer(token);
   }
 
+  const clientId = env.NEXT_PUBLIC_STOREFRONT_CLIENT_ID;
+
+  if (!clientId) {
+    return new Response("Missing client ID", { status: 500 });
+  }
+
   const params = new URLSearchParams({
-    client_id: env.NEXT_PUBLIC_STOREFRONT_CLIENT_ID,
+    client_id: clientId,
     response_type: 'code',
     scope: 'openid email https://api.customers.com/auth/customer.graphql',
-    redirect_uri: env.NEXT_PUBLIC_SHOPIFY_REDIRECT_URL,
+    redirect_uri: env.NEXT_PUBLIC_SHOPIFY_REDIRECT_URL!,
     state: '12345',
     nounce: '67890',
   });
 
-  const loginUrl = `https://shopify.com/${env.NEXT_PUBLIC_STORE_ID}/auth/oauth/authorize?${params.toString()}`;
+  const loginUrl = `https://shopify.com/${env.NEXT_PUBLIC_STORE_ID!}/auth/oauth/authorize?${params.toString()}`;
 
   if (!customer) {
     return <a href={loginUrl}>Login</a>;
