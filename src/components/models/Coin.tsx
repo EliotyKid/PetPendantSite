@@ -68,7 +68,7 @@ const Coin = forwardRef<Group, CustomModelProps>(
                 scale={[1.8, 1.8, 0.05]}
                 rotation={[Math.PI / 2, 0, 0]}
                 position={[0, 0.1, 0]}
-                debug={true}
+                debug={false}
               />
             )}
 
@@ -76,8 +76,8 @@ const Coin = forwardRef<Group, CustomModelProps>(
             {engravingText && (
               <TextDecal
                 engravingText={engravingText}
-                position={[-0.2, 0, 0]}
-                rotation={[0, -Math.PI / 2, 0]}
+                position={[0, -0.09, 0]}
+                rotation={[-Math.PI / 2, Math.PI, 0]}
               />
             )}
           </mesh>
@@ -92,4 +92,3 @@ Coin.displayName = "Coin";
 export default Coin;
 
 useGLTF.preload("/models/Circle.glb");
-

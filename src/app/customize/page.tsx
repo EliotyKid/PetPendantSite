@@ -40,7 +40,8 @@ const Customize = () => {
   const [material, setMaterial] = useState<Material>("gold");
   const [shape, setShape] = useState<Shape>("coin");
   const [chain, setChain] = useState<Chain>("rope");
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [customText, setCustomText] = useState("");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,11 +49,10 @@ const Customize = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setUploadedImage(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
+      setImageFile(file);
+
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
     }
   };
 
@@ -73,14 +73,14 @@ const Customize = () => {
               <ExperienceCustomize
                 active={shape}
                 material={material}
-                image={uploadedImage}
+                image={previewUrl}
                 text={customText}
               />
             </Suspense>
           </Canvas>
         </div>
         <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none opacity-50">
-          <span className="text-sm uppercase tracking-widest text-base font-montserrat">
+          <span className="text-sm uppercase tracking-widest text-secondary font-montserrat">
             Interactive 3D Preview
           </span>
         </div>
@@ -144,7 +144,7 @@ const Customize = () => {
 
           {/* MATERIAL */}
           <div className="flex flex-col gap-4">
-            <label className="text-sm font-bold uppercase tracking-widest text-neutral-500">
+            <label className="text-sm font-bold uppercase tracking-widest text-neutral">
               2. Select Material
             </label>
             <div className="grid grid-cols-3 gap-4">
@@ -153,8 +153,8 @@ const Customize = () => {
                   key={key}
                   onClick={() => setMaterial(key)}
                   className={`
-                    relative p-4 rounded-xl border flex flex-col items-center gap-3 transition-all duration-300
-                    ${material === key ? "border-white bg-secondary" : "border-neutral-800 hover:border-neutral-700"}
+                    relative p-4 rounded-xl border-2 flex flex-col items-center gap-3 transition-all duration-300 hover:scale-105
+                    ${material === key ? "border-transparent bg-secondary text-white" : "border-neutral hover:border-dark-grey bg-light-cream"}
                   `}
                 >
                   <div
@@ -171,16 +171,42 @@ const Customize = () => {
 
           {/* UPLOAD IMAGE */}
           <div className="flex flex-col gap-4">
-            <label className="text-sm font-bold uppercase tracking-widest text-neutral-500">
+            <label className="text-sm font-bold uppercase tracking-widest text-neutral">
               3. Upload Photo
             </label>
             <div
               onClick={() => fileInputRef.current?.click()}
               className={`
                 border-2 border-dashed rounded-xl h-32 flex flex-col items-center justify-center gap-2 cursor-pointer transition-all duration-300 relative overflow-hidden
-                ${uploadedImage ? "border-primary bg-secondary" : "border-neutral-800 hover:border-neutral-700 hover:bg-black"}
+                ${previewUrl ? "border-primary bg-secondary" : "border-neutral-800 hover:border-neutral-700 hover:bg-black"}
               `}
-            />
+            >
+              {previewUrl ? (
+                <>
+                  <div className="absolute flex items-center gap-2 text-primary z-10">
+                    <Check className="w-5 h-5" />
+                    <span className="text-sm font-medium">Applied</span>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setImageFile(null);
+                      setPreviewUrl(null);
+                    }}
+                    className="absolute top-2 right-2 p-1 bg-black/20 rounded-full hover:bg-red/50 transition-colors"
+                  >
+                    <X className="w-4 h-4 text-white" />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Upload className="w-6 h-6 text-neutral-400" />
+                  <span className="text-sm text-neutral-400">
+                    Click to upload
+                  </span>
+                </>
+              )}
+            </div>
             <input
               type="file"
               ref={fileInputRef}
@@ -188,28 +214,6 @@ const Customize = () => {
               accept="image/*"
               onChange={handleImageUpload}
             />
-            {uploadedImage ? (
-              <div className="flex items-center gap-2 text-primary z-10">
-                <Check className="w-5 h-5" />
-                <span className="text-sm font-medium">Applied</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setUploadedImage(null);
-                  }}
-                  className="absolute top-2 right-2 p-1 bg-black/20 rounded-full hover:bg-red/50 transition-colors"
-                >
-                  <X className="w-4 h-4 text-white" />
-                </button>
-              </div>
-            ) : (
-              <>
-                <Upload className="w-6 h-6 text-neutral-400" />
-                <span className="text-sm text-neutral-400">
-                  Click to upload
-                </span>
-              </>
-            )}
           </div>
 
           {/* Text */}
@@ -249,6 +253,7 @@ const Customize = () => {
             shape={shape}
             material={material}
             engravingOption="withBackEngraving"
+            imageFile={imageFile}
           />
         </div>
       </section>

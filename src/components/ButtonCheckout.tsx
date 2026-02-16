@@ -1,6 +1,7 @@
 "use client";
 
 import { createCart } from "@/lib/shopify";
+import { UploadImage } from "@/lib/utils";
 import { useState } from "react";
 
 type Material = "gold" | "silver" | "rose";
@@ -53,19 +54,31 @@ interface ButtonCheckoutProps {
   shape: Shape;
   material: Material;
   engravingOption: EngravingOption;
+  imageFile: File | null;
 }
 
 const ButtonCheckout = ({
   shape,
   material,
   engravingOption,
+  imageFile,
 }: ButtonCheckoutProps) => {
   const [loading, setLoading] = useState(false);
 
   const HandleBuyNow = async () => {
+    if (!imageFile) {
+      alert("Por favor selecione uma imagem");
+      return;
+    }
     setLoading(true);
 
     try {
+      const cloudinaryUrl = await UploadImage(imageFile);
+
+      if (!cloudinaryUrl) {
+        throw new Error("Falha ao carregar a imagem para o servidor.");
+      }
+
       const variantId = PRODUCT_IDS[shape][engravingOption][material];
 
       const lines = [
@@ -75,6 +88,8 @@ const ButtonCheckout = ({
           attributes: [
             { key: "Shape", value: shape },
             { key: "Material", value: material },
+            { key: "_Image_Url", value: cloudinaryUrl },
+            { key: "Customization", value: cloudinaryUrl },
           ],
         },
       ];
@@ -86,6 +101,7 @@ const ButtonCheckout = ({
       }
     } catch (error) {
       console.error("Erro ao processar compra:", error);
+      alert("Ocorreu um erro ao processar o seu pedido. Tente novamente");
     } finally {
       setLoading(false);
     }

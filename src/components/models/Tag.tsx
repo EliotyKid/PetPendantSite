@@ -68,7 +68,7 @@ const Tag = forwardRef<Group, CustomModelProps>(
             {textureUrl && (
               <ImageDecal
                 url={textureUrl}
-                debug={true} // <--- LIGADO
+                debug={false} // <--- LIGADO
                 rotation={[Math.PI / 2, 0, Math.PI / 2]} // Girado para alinhar com a face
                 scale={[2, 2, 0.05]} // Retangular e profundo
                 position={[0, 0.1, 0]}
@@ -78,8 +78,8 @@ const Tag = forwardRef<Group, CustomModelProps>(
             {engravingText && (
               <TextDecal
                 engravingText={engravingText}
-                position={[-0.2, 0, 0]}
-                rotation={[Math.PI, -Math.PI / 2, 0]}
+                position={[0, -0.09, 0]}
+                rotation={[Math.PI / 2, 0, -Math.PI / 2]}
               />
             )}
           </mesh>

@@ -74,12 +74,19 @@ const Hearth = forwardRef<Group, CustomModelProps>(
                 scale={[3.2, 3.2, 0.05]}
                 rotation={[Math.PI / 2, 0, 0]}
                 position={[0, 0.15, -0.1]}
-                debug={true}
+                debug={false}
               />
             )}
 
             {/* VERSO (TEXTO) */}
-            {engravingText && <TextDecal engravingText={engravingText} />}
+            {engravingText && (
+              <TextDecal
+                engravingText={engravingText}
+                position={[0, -0.17, 0]}
+                rotation={[-Math.PI / 2, Math.PI, 0]}
+                scale={[4, 4, 4]}
+              />
+            )}
           </mesh>
         </group>
       </group>
